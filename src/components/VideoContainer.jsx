@@ -11,7 +11,6 @@ const VideoContainer = () => {
     try {
       const data = await fetch(YOUTUBE_VIDEOS_API);
       const convertToJson = await data.json();
-      console.log(convertToJson.items);
       getVideos(convertToJson.items);
     } catch (error) {
       console.log(error);

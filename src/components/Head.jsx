@@ -1,4 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { toggleSidebar } from "../redux/appSlice";
+import { cacheResults } from "../redux/searchSlice";
+import { YOUTUBE_SEARCH_SUGGESTIONS_API } from "../utils/constants";
 
 import { FaYoutube } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
@@ -6,14 +11,44 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
-import { toggleSidebar } from "../redux/appSlice";
 
 const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectSuggestions, setSelectSuggestions] = useState(0);
   const dispatch = useDispatch();
+
+  const searchCache = useSelector((store) => store.search);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
   };
+
+  const getSearchSuggestions = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_SUGGESTIONS_API + searchQuery);
+    const json = await data.json();
+    setSuggestions(json[1]);
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
+  };
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [searchQuery]);
 
   return (
     <nav className='h-14 sticky bg-white z-10 top-0 flex items-center justify-between px-6'>
@@ -32,15 +67,65 @@ const Head = () => {
 
       {/* (Middle) - Search Bar */}
       <div className='flex w-[39rem] gap-4'>
-        <div className='border h-10 w-full pl-4 flex justify-between items-center rounded-3xl'>
-          <input
-            type='text'
-            placeholder='Search'
-            className='outline-none pr-1 w-full'
-          />
-          <button className='bg-slate-100 h-full w-16 overflow-hidden rounded-r-3xl border-l flex justify-center items-center'>
-            <RiSearchLine size={20} />
-          </button>
+        <div className='w-full'>
+          <div
+            onKeyDown={(e) => {
+              if (selectSuggestions <= 1) {
+                setSelectSuggestions(0);
+              }
+              if (e.keyCode == 40) {
+                setSelectSuggestions(
+                  suggestions.length > selectSuggestions &&
+                    selectSuggestions + 1
+                );
+              } else if (e.keyCode == 38) {
+                setSelectSuggestions(
+                  selectSuggestions > 0 && selectSuggestions - 1
+                );
+              }
+            }}
+            className={`border h-10 w-full pl-4 flex justify-between items-center rounded-3xl`}
+          >
+            <input
+              type='search'
+              placeholder='Search'
+              className='outline-none pr-1 w-full'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setShowSuggestions(false)}
+            />
+
+            <button className='bg-slate-100 h-full w-16 overflow-hidden rounded-r-3xl border-l flex justify-center items-center'>
+              <RiSearchLine size={20} />
+            </button>
+          </div>
+
+          {searchQuery && showSuggestions && (
+            <div
+              className={`bg-zinc-50 border shadow text-black fixed w-[31.8rem] mt-2 rounded-md`}
+            >
+              <ul className='py-3'>
+                {suggestions?.map((suggestion, index) => (
+                  <li
+                    key={suggestion}
+                    className={`py-1.5 px-4 flex items-center gap-2 hover:bg-zinc-200 ${
+                      selectSuggestions == index ? "bg-zinc-300" : ""
+                    }`}
+                  >
+                    <RiSearchLine />
+                    <span>{suggestion}</span>
+                  </li>
+                ))}
+                {suggestions?.length === 0 && (
+                  <li className='py-1.5 px-4 flex items-center gap-2 hover:bg-zinc-200'>
+                    <RiSearchLine />
+                    <span>{searchQuery}</span>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
         </div>
         <button className='h-10 w-11 bg-slate-100 rounded-full flex justify-center items-center'>
           <MdKeyboardVoice size={25} />
