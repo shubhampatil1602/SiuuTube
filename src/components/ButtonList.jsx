@@ -10,7 +10,7 @@ const ButtonList = () => {
     "Live",
   ];
   return (
-    <div className='h-14 px-4 mb-3 flex justify-start items-center gap-3 overflow-scroll'>
+    <div className='h-14 w-[90%] mx-auto mb-3 flex justify-start items-center gap-3 overflow-scroll'>
       {items.map((item) => (
         <button
           key={item}
