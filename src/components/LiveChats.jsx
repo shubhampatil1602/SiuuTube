@@ -25,7 +25,7 @@ const LiveChats = () => {
           />
         ))}
       </div>
-      <div className='w-full border-t py-3 px-6 flex gap-2'>
+      <div className='w-full border-t border-gray-300 py-3 px-6 flex gap-2'>
         <form
           className='w-[90%]'
           onSubmit={(e) => {
@@ -36,14 +36,14 @@ const LiveChats = () => {
         >
           <input
             type='text'
-            className='border-none outline-none bg-white px-3 py-1.5 rounded-3xl w-full'
+            className='border-none outline-none bg-white shadow px-3 py-1.5 rounded-3xl w-full'
             placeholder='Chat...'
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
         </form>
         <button
-          className='bg-white h-8 w-8 rounded-full'
+          className='bg-white shadow h-8 w-8 rounded-full'
           onClick={(e) => {
             e.preventDefault();
             dispatch(addMessage({ name: "You", message: "❤️" }));
@@ -61,7 +61,7 @@ export default LiveChats;
 const ChatMessage = ({ name, message }) => {
   return (
     <div className='flex items-center gap-2 p-2 rounded-md'>
-      <div className='h-6 w-6 rounded-full text-sm flex items-center justify-center font-semibold bg-gray-300 text-gray-700'>
+      <div className='h-6 w-6 rounded-full text-sm flex items-center justify-center font-semibold bg-gray-300 text-gray-700 shadow'>
         {name[0]}
       </div>
 

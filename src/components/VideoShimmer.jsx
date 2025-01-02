@@ -1,3 +1,18 @@
+const VideoShimmer = () => {
+  return (
+    <div className='flex justify-center flex-wrap gap-[1rem]'>
+      <VideoCardShimmer />
+      <VideoCardShimmer />
+      <VideoCardShimmer />
+      <VideoCardShimmer />
+      <VideoCardShimmer />
+      <VideoCardShimmer />
+    </div>
+  );
+};
+
+export default VideoShimmer;
+
 const VideoCardShimmer = () => {
   return (
     <div className={`w-[383px] animate-pulse`}>
@@ -15,5 +30,3 @@ const VideoCardShimmer = () => {
     </div>
   );
 };
-
-export default VideoCardShimmer;

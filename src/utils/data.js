@@ -1,3 +1,14 @@
+// Tabs data
+export const items = [
+  "All",
+  "Live",
+  "Dwarka",
+  "Music",
+  "Namaste JavaScript",
+  "100xDevs",
+  "Cricket",
+];
+
 // n level nested comments data
 export const commentsData = [
   {
