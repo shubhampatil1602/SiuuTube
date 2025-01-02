@@ -11,6 +11,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
+import { createSearchParams, Link, useNavigate } from "react-router-dom";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,6 +19,7 @@ const Head = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectSuggestions, setSelectSuggestions] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const searchCache = useSelector((store) => store.search);
 
@@ -34,6 +36,17 @@ const Head = () => {
         [searchQuery]: json[1],
       })
     );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const queryParams = {
+      search_query: searchQuery,
+    };
+    navigate({
+      pathname: "/results",
+      search: `?${createSearchParams(queryParams)}`,
+    });
   };
 
   useEffect(() => {
@@ -57,18 +70,19 @@ const Head = () => {
         <div className='font-bold' onClick={handleSidebar}>
           <GiHamburgerMenu size={24} className='cursor-pointer ' />
         </div>
-        <a href={"/"}>
+        <Link to={"/"}>
           <div className='flex justify-center items-center gap-x-1.5'>
             <FaYoutube size={30} color='red' />
             <span className='font-bold text-2xl tracking-tight'>SiuuTube</span>
           </div>
-        </a>
+        </Link>
       </div>
 
       {/* (Middle) - Search Bar */}
       <div className='flex w-[39rem] gap-4'>
         <div className='w-full'>
-          <div
+          <form
+            onSubmit={handleSubmit}
             onKeyDown={(e) => {
               if (selectSuggestions <= 1) {
                 setSelectSuggestions(0);
@@ -99,7 +113,7 @@ const Head = () => {
             <button className='bg-slate-100 h-full w-16 overflow-hidden rounded-r-3xl border-l flex justify-center items-center'>
               <RiSearchLine size={20} />
             </button>
-          </div>
+          </form>
 
           {searchQuery && showSuggestions && (
             <div
@@ -134,7 +148,7 @@ const Head = () => {
 
       {/* (Right) - User Info */}
       <div className='flex items-center justify-center gap-5'>
-        <button className='flex justify-center items-center gap-0.5 bg-slate-100 rounded-3xl h-10 w-24'>
+        <button className='hidden sm:flex justify-center items-center gap-0.5 bg-slate-100 rounded-3xl h-10 w-24'>
           <FiPlus size={25} />
           <span className='font-semibold text-sm'>Create</span>
         </button>

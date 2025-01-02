@@ -11,11 +11,15 @@ import App from "./App.jsx";
 
 // Styles
 import "./index.css";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./route.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <StrictMode>
-      <App />
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
     </StrictMode>
   </Provider>
 );
