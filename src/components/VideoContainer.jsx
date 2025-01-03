@@ -34,7 +34,7 @@ const VideoContainer = () => {
       setLoading(true);
       const data = await fetch(YOUTUBE_LIVE_VIDEOS_API);
       const convertToJson = await data.json();
-      console.log(convertToJson.items);
+      // console.log(convertToJson.items);
       setLiveVideos(convertToJson.items);
     } catch (error) {
       console.log(error);
@@ -56,7 +56,7 @@ const VideoContainer = () => {
       case "All":
         return loading ? (
           <VideoShimmer />
-        ) : videos.length > 0 ? (
+        ) : videos?.length > 0 ? (
           videos.map((video) => (
             <Link key={video?.id} to={`/watch?v=${video?.id}`}>
               <VideoCard videoInfo={video} />
@@ -69,7 +69,7 @@ const VideoContainer = () => {
       case "Live":
         return loading ? (
           <VideoShimmer />
-        ) : liveVideos.length > 0 ? (
+        ) : liveVideos?.length > 0 ? (
           liveVideos.map((video) => (
             <Link
               key={video?.id?.videoId}

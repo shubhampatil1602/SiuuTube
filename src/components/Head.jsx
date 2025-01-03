@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createSearchParams, Link, useNavigate } from "react-router-dom";
 
 import { toggleSidebar } from "../redux/appSlice";
 import { cacheResults } from "../redux/searchSlice";
@@ -11,13 +12,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 import { RiSearchLine } from "react-icons/ri";
-import { createSearchParams, Link, useNavigate } from "react-router-dom";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectSuggestions, setSelectSuggestions] = useState(0);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,6 +48,19 @@ const Head = () => {
       pathname: "/results",
       search: `?${createSearchParams(queryParams)}`,
     });
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setSearchQuery(suggestion);
+
+    const queryParams = {
+      search_query: suggestion,
+    };
+    navigate({
+      pathname: "/results",
+      search: `?${createSearchParams(queryParams)}`,
+    });
+    setShowSuggestions(false);
   };
 
   useEffect(() => {
@@ -87,15 +101,19 @@ const Head = () => {
               if (selectSuggestions <= 1) {
                 setSelectSuggestions(0);
               }
-              if (e.keyCode == 40) {
+              if (e.keyCode === 40) {
                 setSelectSuggestions(
-                  suggestions.length > selectSuggestions &&
-                    selectSuggestions + 1
+                  suggestions.length > selectSuggestions
+                    ? selectSuggestions + 1
+                    : selectSuggestions
                 );
-              } else if (e.keyCode == 38) {
+              } else if (e.keyCode === 38) {
                 setSelectSuggestions(
-                  selectSuggestions > 0 && selectSuggestions - 1
+                  selectSuggestions > 0 ? selectSuggestions - 1 : 0
                 );
+              } else if (e.keyCode === 13 && suggestions[selectSuggestions]) {
+                setSearchQuery(suggestions[selectSuggestions]);
+                setShowSuggestions(false);
               }
             }}
             className={`border h-10 w-full pl-4 flex justify-between items-center rounded-3xl`}
@@ -107,7 +125,7 @@ const Head = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setShowSuggestions(false)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
             />
 
             <button className='bg-slate-100 h-full w-16 overflow-hidden rounded-r-3xl border-l flex justify-center items-center'>
@@ -126,6 +144,7 @@ const Head = () => {
                     className={`py-1.5 px-4 flex items-center gap-2 hover:bg-zinc-200 ${
                       selectSuggestions == index ? "bg-zinc-300" : ""
                     }`}
+                    onClick={() => handleSelectSuggestion(suggestion)}
                   >
                     <RiSearchLine />
                     <span>{suggestion}</span>
