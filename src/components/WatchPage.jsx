@@ -6,8 +6,9 @@ import CommentContainer from "./CommentContainer";
 import LiveChats from "./LiveChats";
 
 const WatchPage = () => {
-  const queryParam = useLocation();
   const dispatch = useDispatch();
+
+  const queryParam = useLocation();
   const videoId = queryParam.search.split("?v=")[1];
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const WatchPage = () => {
           <CommentContainer />
         </div>
       </div>
+
       <div className='w-[30%] h-[600px] bg-slate-100 border shadow-md rounded-lg mt-3'>
         <LiveChats />
       </div>

@@ -1,7 +1,7 @@
 const SearchVideoCard = ({ data }) => {
   return (
-    <div className='w-full flex gap-4'>
-      <div className='w-[30%]'>
+    <div className='w-full flex flex-col sm:flex-row gap-1 sm:gap-4 p-3 sm:p-0 rounded-lg transition-all duration-200 hover:bg-slate-100'>
+      <div className='sm:w-[30%] w-full'>
         <img
           src={
             data?.snippet?.thumbnails?.default?.url ||
@@ -9,10 +9,10 @@ const SearchVideoCard = ({ data }) => {
             data?.snippet?.thumbnails?.high?.url
           }
           alt='thumbnail'
-          className='w-[360px] h-[200px] mx-auto object-cover rounded-xl shadow'
+          className='sm:w-[360px] w-full h-[200px] mx-auto object-cover rounded-xl shadow'
         />
       </div>
-      <div className='mt-2 w-[70%]'>
+      <div className='mt-2 w-full sm:w-[70%]'>
         <h4 className='line-clamp-1 text-xl font-medium'>
           {data?.snippet?.title}
         </h4>
@@ -29,6 +29,12 @@ const SearchVideoCard = ({ data }) => {
         <p className='line-clamp-2 text-gray-600 text-sm mt-5'>
           {data?.snippet?.description}
         </p>
+
+        {data?.snippet?.liveBroadcastContent === "live" ? (
+          <div className='mt-3 bg-red-600 tracking-tight text-white w-fit text-xs font-semibold px-1.5 py-0.5 rounded'>
+            LIVE
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -12,13 +12,13 @@ const ButtonList = () => {
   };
 
   return (
-    <div className='h-14 px-[3.5%] mb-3 flex justify-start items-center gap-3 overflow-scroll'>
+    <div className='h-14 w-full px-[3.5%] mb-3 flex justify-start items-center gap-3 overflow-scroll'>
       {items.map((item) => (
         <button
           key={item}
           className={`${
             activeTab === item ? "bg-black text-white" : "bg-slate-200/80"
-          } transition-all duration-200 font-semibold px-3 py-1 rounded-md`}
+          } text-left transition-all duration-200 font-semibold px-3 py-1 rounded-md whitespace-nowrap`}
           onClick={() => handleItem(item)}
         >
           {item}

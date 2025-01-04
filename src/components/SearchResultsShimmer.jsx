@@ -13,11 +13,11 @@ export default SearchResultsShimmer;
 
 const SearchResultsShimmerCard = () => {
   return (
-    <div className='w-full flex gap-4'>
-      <div className='w-[30%]'>
-        <div className='w-[360px] h-[200px] mx-auto bg-slate-200 animate-pulse rounded-xl shadow' />
+    <div className='w-full flex flex-col sm:flex-row gap-4'>
+      <div className='sm:w-[30%] w-full'>
+        <div className='w-full h-[200px] mx-auto bg-slate-200 animate-pulse rounded-xl shadow' />
       </div>
-      <div className='mt-2 w-[70%]'>
+      <div className='mt-2 w-full sm:w-[70%]'>
         <p className='h-4 w-2/3 bg-slate-200 rounded-md'></p>
         <p className='h-3 w-1/4 bg-slate-200 rounded-md mt-3'></p>
         <p className='h-3 w-2/5 bg-slate-200 rounded-md mt-4'></p>

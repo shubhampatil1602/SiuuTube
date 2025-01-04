@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { convertTime } from "../utils/helper";
 
 const VideoCard = ({ videoInfo }) => {
   const isSidebarOpen = useSelector((state) => state.app.isSidebarOpen);
@@ -15,6 +16,7 @@ const VideoCard = ({ videoInfo }) => {
     (icons == 8 && "👑") ||
     (icons == 9 && "💐") ||
     (icons == 10 && "🌹");
+
   return (
     <div
       className={`w-[23rem] ${
@@ -22,12 +24,23 @@ const VideoCard = ({ videoInfo }) => {
       }`}
     >
       {/* Thumbnail */}
-      <div className='w-full'>
+      <div className='w-full relative'>
         <img
           src={videoInfo?.snippet?.thumbnails?.medium?.url}
           alt={videoInfo?.snippet?.title}
           className='w-full h-auto max-h-[215px] object-contain object-center rounded-lg'
         />
+        {videoInfo?.kind === "youtube#video" ? (
+          <div className='bg-black bg-opacity-80 tracking-tight text-white w-fit text-xs font-semibold absolute bottom-1 right-2 px-1 py-0.5 rounded'>
+            {convertTime(videoInfo?.contentDetails?.duration)}
+          </div>
+        ) : null}
+
+        {videoInfo?.snippet?.liveBroadcastContent === "live" ? (
+          <div className='bg-red-600 tracking-tight text-white w-fit text-xs font-semibold absolute bottom-1 right-2 px-1 py-0.5 rounded'>
+            LIVE
+          </div>
+        ) : null}
       </div>
       {/* Title and details */}
       <div className='h-[100px] flex pt-2 gap-2 w-full'>

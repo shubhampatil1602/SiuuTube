@@ -34,7 +34,6 @@ const VideoContainer = () => {
       setLoading(true);
       const data = await fetch(YOUTUBE_LIVE_VIDEOS_API);
       const convertToJson = await data.json();
-      // console.log(convertToJson.items);
       setLiveVideos(convertToJson.items);
     } catch (error) {
       console.log(error);
