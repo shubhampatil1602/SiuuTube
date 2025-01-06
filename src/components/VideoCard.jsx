@@ -30,12 +30,16 @@ const VideoCard = ({ videoInfo }) => {
           alt={videoInfo?.snippet?.title}
           className='w-full h-auto max-h-[215px] object-contain object-center rounded-lg'
         />
-        {videoInfo?.kind === "youtube#video" ? (
+        {/* Video duration tag */}
+        {videoInfo?.snippet?.liveBroadcastContent !== "live" ? (
           <div className='bg-black bg-opacity-80 tracking-tight text-white w-fit text-xs font-semibold absolute bottom-1 right-2 px-1 py-0.5 rounded'>
-            {convertTime(videoInfo?.contentDetails?.duration)}
+            {convertTime(videoInfo?.contentDetails?.duration)?.length <= 2
+              ? `00:${convertTime(videoInfo?.contentDetails?.duration)}`
+              : convertTime(videoInfo?.contentDetails?.duration)}
           </div>
         ) : null}
 
+        {/* Live video tag */}
         {videoInfo?.snippet?.liveBroadcastContent === "live" ? (
           <div className='bg-red-600 tracking-tight text-white w-fit text-xs font-semibold absolute bottom-1 right-2 px-1 py-0.5 rounded'>
             LIVE
