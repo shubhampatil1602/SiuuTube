@@ -10,10 +10,10 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <>
+      <div className='min-h-screen'>
         <Head />
         <Body />
-      </>
+      </div>
     ),
     children: [
       {

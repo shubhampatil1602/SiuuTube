@@ -15,7 +15,7 @@ export default VideoShimmer;
 
 const VideoCardShimmer = () => {
   return (
-    <div className={`w-[383px] animate-pulse`}>
+    <div className={`w-[370px] animate-pulse`}>
       {/* Thumbnail */}
       <div className='w-full h-[215px] bg-slate-200 rounded-lg' />
       {/* Title and details */}

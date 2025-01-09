@@ -19,9 +19,7 @@ const VideoCard = ({ videoInfo }) => {
 
   return (
     <div
-      className={`w-[23rem] ${
-        isSidebarOpen ? "max-w-[24rem]" : "max-w-[20.3rem]"
-      }`}
+      className={`w-[23rem] ${isSidebarOpen ? "max-w-[24rem]" : "w-[20.3rem]"}`}
     >
       {/* Thumbnail */}
       <div className='w-full relative'>

@@ -29,19 +29,19 @@ const Body = () => {
   }, [dispatch]);
 
   return (
-    <div className='h-[calc(100vh-3.5rem)] w-full relative flex'>
+    <div className='min-h-screen w-full relative flex'>
       {isSidebarOpen ? (
         <div
-          className={`w-[300px] h-full overflow-scroll !transition-all !duration-300`}
+          className={`w-[240px] bg-white fixed z-10 h-full overflow-scroll !transition-all !duration-300`}
         >
           <Sidebar />
         </div>
       ) : (
-        <div className='w-[0px] h-full overflow-scroll !transition-all !duration-300'>
+        <div className='w-[0px] h-full !transition-all !duration-300'>
           {/* <Sidebar /> */}
         </div>
       )}
-      <div className='w-full h-full overflow-scroll'>
+      <div className={`w-full h-full overflow-scroll`}>
         <Outlet />
       </div>
     </div>

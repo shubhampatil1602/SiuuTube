@@ -78,7 +78,7 @@ const Head = () => {
   }, [searchQuery]);
 
   return (
-    <nav className='h-14 sticky bg-white shadow z-10 top-0 flex items-center justify-between px-6'>
+    <nav className='h-14 sticky bg-white border-b z-10 top-0 flex items-center justify-between px-6'>
       {/* (Left) - Ham Menu & Logo */}
       <div className='flex justify-center items-center gap-x-6'>
         <div className='font-bold' onClick={handleSidebar}>
