@@ -1,47 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
-import { closeMenu } from "../redux/appSlice";
 
 const Body = () => {
-  const dispatch = useDispatch();
   const isSidebarOpen = useSelector((store) => store.app.isSidebarOpen);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 642) {
-        dispatch(closeMenu());
-      }
-    };
-
-    // Attach the resize event listener
-    window.addEventListener("resize", handleResize);
-
-    // Call the handler initially to check the current width
-    handleResize();
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [dispatch]);
-
   return (
-    <div className='min-h-screen w-full relative flex'>
-      {isSidebarOpen ? (
+    <div className='min-h-screen w-full relative grid grid-cols-2 sm:grid-cols-12 dark:bg-neutral-900'>
+      {isSidebarOpen && (
         <div
-          className={`w-[240px] bg-white fixed z-10 h-full overflow-scroll !transition-all !duration-300`}
+          className={`sticky top-[56px] bg-white dark:bg-neutral-900 z-10 hidden sm:block ${
+            isSidebarOpen ? "sm:col-span-2" : ""
+          } h-[calc(100vh-56px)] border-r dark:border-neutral-800`}
         >
-          <Sidebar />
-        </div>
-      ) : (
-        <div className='w-[0px] h-full !transition-all !duration-300'>
-          {/* <Sidebar /> */}
+          <div className='overflow-auto h-full'>
+            <Sidebar />
+          </div>
         </div>
       )}
-      <div className={`w-full h-full overflow-scroll`}>
+
+      <div className={`${isSidebarOpen ? "col-span-10" : "col-span-12"}`}>
         <Outlet />
       </div>
     </div>

@@ -37,14 +37,14 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className='bg-slate-0 w-full h-full px-2 py-3 border-r'>
-      <div className='flex flex-col gap-2 pb-4 mb-4 border-b'>
+    <aside className='bg-white dark:bg-zinc-900 w-full h-full px-2 py-3 border-r border-zinc-200 dark:border-zinc-800 relative text-zinc-900 dark:text-zinc-100'>
+      <div className='flex flex-col gap-2 pb-4 mb-4 border-b border-zinc-200 dark:border-zinc-800'>
         {topSideItems.map(({ icon, text }) => (
           <div
             key={text}
             className={`${
-              activeSideTab === text && "bg-gray-200"
-            } cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 transition-all`}
+              activeSideTab === text ? "bg-gray-200 dark:bg-zinc-800" : ""
+            } cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-all`}
             onClick={() => setActiveSideTab(text)}
           >
             {icon}
@@ -53,41 +53,21 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div className='flex flex-col gap-2 pb-4 mb-4 border-b'>
+      <div className='flex flex-col gap-2 pb-4 mb-4 border-b border-zinc-200 dark:border-zinc-800'>
         <div
-          className={`cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 transition-all`}
+          className={`cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-all`}
         >
-          <span className='font-semibold text-lg'>You</span> ＞
+          <span className='font-semibold text-lg'>You</span>{" "}
         </div>
         {youItems.map(({ icon, text }) => (
           <div
             key={text}
             className={`${
-              activeSideTab === text && "bg-gray-200"
-            } cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 transition-all`}
+              activeSideTab === text ? "bg-gray-200 dark:bg-zinc-800" : ""
+            } cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-zinc-800 transition-all`}
             onClick={() => setActiveSideTab(text)}
           >
             {icon}
-            <span>{text}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className='flex flex-col gap-2 pb-4 mb-4 border-b'>
-        <div
-          className={`cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 transition-all`}
-        >
-          <span className='font-bold text-lg'>Subscriptions</span>
-        </div>
-        {youItems.map(({ icon, text }) => (
-          <div
-            key={text}
-            className={`${
-              activeSideTab === text && "bg-gray-200"
-            } cursor-pointer rounded-lg h-10 pl-2 flex items-center gap-4 hover:bg-gray-200 transition-all`}
-            onClick={() => setActiveSideTab(text)}
-          >
-            <div className='h-6 w-6 rounded-full bg-slate-400'></div>
             <span>{text}</span>
           </div>
         ))}
@@ -95,13 +75,13 @@ const Sidebar = () => {
 
       {/* Footer */}
       <div
-        className={`rounded-lg flex flex-col items-center h-10 pl-2 transition-all`}
+        className={`absolute bottom-6 left-0 right-0 mx-auto rounded-lg flex flex-col items-center pl-2 transition-all text-sm`}
       >
-        <span>Made with 🤬❤️😄</span>
+        <span>Build in public by</span>
         <a
-          href='https://github.com/shubhampatil1602'
+          href='https://shubhamspatil.vercel.app'
           target='_blank'
-          className='font-bold text-lg hover:underline cursor-pointer '
+          className='font-bold text-lg hover:underline cursor-pointer text-zinc-900 dark:text-zinc-100 text-sm'
         >
           Shubham Patil
         </a>

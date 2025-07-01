@@ -1,13 +1,7 @@
-import Head from "./components/Head";
-import Body from "./components/Body";
+import Layout from "./Layout";
 
 function App() {
-  return (
-    <div className='min-h-screen w-full relative'>
-      <Head />
-      <Body />
-    </div>
-  );
+  return <Layout />;
 }
 
 export default App;

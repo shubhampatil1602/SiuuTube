@@ -17,7 +17,9 @@ const ButtonList = () => {
         <button
           key={item}
           className={`${
-            activeTab === item ? "bg-black text-white" : "bg-slate-200/80"
+            activeTab === item
+              ? "bg-black text-white dark:bg-white dark:text-black"
+              : "bg-slate-200/80 dark:bg-neutral-800 dark:text-gray-200"
           } text-left transition-all duration-200 font-semibold px-3 py-1 rounded-md whitespace-nowrap`}
           onClick={() => handleItem(item)}
         >

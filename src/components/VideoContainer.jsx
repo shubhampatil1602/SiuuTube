@@ -1,121 +1,107 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setVideosForTab } from "../redux/videosSlice";
+import { Loader } from "lucide-react";
 
 import {
   YOUTUBE_LIVE_VIDEOS_API,
+  YOUTUBE_VIDEO_SEARCH_RESULTS_API,
   YOUTUBE_VIDEOS_API,
 } from "../utils/constants";
 import VideoCard from "./VideoCard";
 import VideoShimmer from "./VideoShimmer";
-import { cacheVideos } from "../redux/videosSlice";
+
+const MAX_RESULTS = 50;
+
+const Spinner = () => (
+  <div className='flex justify-center py-4 w-full text-zinc-900 dark:text-zinc-100'>
+    <Loader className='size-6 animate-spin' />
+  </div>
+);
 
 const VideoContainer = () => {
-  const [videos, setVideos] = useState([]);
-  const [videosPage, setVideosPage] = useState(1);
-  const [liveVideos, setLiveVideos] = useState([]);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-
+  const [nextPageToken, setNextPageToken] = useState(null);
+  const videosByTab = useSelector((store) => store.videos.videosByTab);
   const activeTab = useSelector((store) => store.activeTab);
-  // const videos = useSelector((store) => store.videosSlice.videos);
+  const videos = videosByTab[activeTab] || [];
+  const loader = useRef(null);
 
-  // const dispatch = useDispatch();
-
-  const fetchVideos = async () => {
+  const fetchVideos = async (pageToken = "") => {
     try {
       setLoading(true);
-      const data = await fetch(
-        `${YOUTUBE_VIDEOS_API}&maxResults=${videosPage * 10}`
+      let url = "";
+      if (activeTab === "All") {
+        url = `${YOUTUBE_VIDEOS_API}&maxResults=10`;
+      } else if (activeTab === "Live") {
+        url = YOUTUBE_LIVE_VIDEOS_API;
+      } else {
+        url = YOUTUBE_VIDEO_SEARCH_RESULTS_API + activeTab;
+      }
+      if (pageToken) url += `&pageToken=${pageToken}`;
+      const data = await fetch(url);
+      const json = await data.json();
+      dispatch(
+        setVideosForTab({
+          tab: activeTab,
+          videos: json?.items || [],
+          append: !!pageToken,
+        })
       );
-      const convertToJson = await data.json();
-      setVideos(convertToJson.items);
-      setVideosPage(videosPage + 1);
-      // console.log(convertToJson.items);
-      // dispatch(cacheVideos(convertToJson.items));
+      setNextPageToken(json.nextPageToken || null);
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchLiveVideos = async () => {
-    try {
-      setLoading(true);
-      const data = await fetch(YOUTUBE_LIVE_VIDEOS_API);
-      const convertToJson = await data.json();
-      setLiveVideos((prevData) => [...prevData, ...convertToJson.items]);
-    } catch (error) {
-      console.log(error);
+      console.log("Fetch error:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (activeTab === "All") {
-      // if (!videos.length) {
+    setNextPageToken(null);
+    if (!videos || videos.length === 0) {
       fetchVideos();
-      // }
-    } else if (activeTab === "Live") {
-      fetchLiveVideos();
     }
+    // eslint-disable-next-line
   }, [activeTab]);
 
-  const handleScroll = async () => {
-    try {
-      // console.log("scrolling ------", document.documentElement.scrollHeight);
-      // console.log("inner ------", window.innerHeight);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (
+        target.isIntersecting &&
+        nextPageToken &&
+        !loading &&
+        videos.length < MAX_RESULTS
+      ) {
+        fetchVideos(nextPageToken);
+      }
+    },
+    [nextPageToken, loading, videos]
+  );
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    const option = { root: null, rootMargin: "0px", threshold: 1.0 };
+    const observer = new window.IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+    return () => observer.disconnect();
+  }, [handleObserver]);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-  const renderVideos = () => {
-    switch (activeTab) {
-      case "All":
-        return loading ? (
-          <VideoShimmer />
-        ) : videos?.length > 0 ? (
-          videos.map((video) => (
-            <Link key={video?.id} to={`/watch?v=${video?.id}`}>
-              <VideoCard videoInfo={video} />
-            </Link>
-          ))
-        ) : (
-          <VideoShimmer />
-        );
-
-      case "Live":
-        return loading ? (
-          <VideoShimmer />
-        ) : liveVideos?.length > 0 ? (
-          liveVideos.map((video) => (
-            <Link
-              key={video?.id?.videoId}
-              to={`/watch?v=${video?.id?.videoId}`}
-            >
-              <VideoCard videoInfo={video} />
-            </Link>
-          ))
-        ) : (
-          <VideoShimmer />
-        );
-
-      default:
-        return <VideoShimmer />;
-    }
-  };
+  if (loading && videos.length === 0) return <VideoShimmer />;
 
   return (
-    <div className={`px-4 flex flex-wrap gap-[1rem] justify-center`}>
-      {renderVideos()}
-      {loading && "loading........"}
+    <div className='px-4 flex flex-wrap gap-[1rem] justify-center bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100'>
+      {videos.map((video) => (
+        <Link
+          key={video?.id?.videoId || video?.id}
+          to={`/watch?v=${video?.id?.videoId || video?.id}`}
+        >
+          <VideoCard videoInfo={video} />
+        </Link>
+      ))}
+      <div ref={loader} />
+      {loading && videos.length > 0 && <Spinner />}
     </div>
   );
 };

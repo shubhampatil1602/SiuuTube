@@ -9,40 +9,34 @@ export const items = [
   "Cricket",
 ];
 
-// n level nested comments data
+// Simple comments data
 export const commentsData = [
   {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROyxOmbRVxRw6NxmEzS9fzTWl-5qhElKZOQw&s",
-    name: "SiuuTube",
-    text: "In a Live video: If the number of live chats exceeds 30, the top 10 chats are removed from the Redux store and DOM to prevent page freeze and improve performance.",
-    replies: [],
-  },
-
-  {
-    image:
-      "https://c.ndtvimg.com/2024-10/l50qk0ko_mohammed-siraj_625x300_12_October_24.jpg?im=FeatureCrop,algorithm=dnn,width=806,height=605",
-    name: "DSP Siraj",
-    text: "I am only believe on Jassi bhai becoz Game Changer player he is, only 1 guy Jasprit Bumrah.",
+    image: "/better-blur-placeholder.jpg",
+    name: "Alice",
+    text: "Nice video!",
     replies: [],
   },
   {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb-msiVgbXrIAm5X9jv8t2NnRIRT4awSkSOwURqZ2y97jhPalX8qelAd8&s=10",
-    name: "Chaudhary Baldev",
-    text: "Jaa Simran jaa, jee le apni zindagi.",
+    image: "/better-blur-placeholder.jpg",
+    name: "Bob",
+    text: "Loved it!",
+    replies: [],
+  },
+  {
+    image: "/better-blur-placeholder.jpg",
+    name: "Charlie",
+    text: "So cool!",
     replies: [
       {
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfqc9xIHHqCleeA3IafJ1L66V8MQTLSWcL1g&s",
-        name: "Jethalal Gada",
-        text: "Bhen topi pehenti hai aur bhai topi pehnata hai 😆😆",
+        image: "/better-blur-placeholder.jpg",
+        name: "Daisy",
+        text: "Agreed!",
         replies: [
           {
-            image:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQdh2xEl_S4FRQE7pcFRTjSg3YHK6tI9Yq4w&s",
-            name: "Munna bhaiyaa",
-            text: "Ye bhadiya tha guruu 🤣🤣",
+            image: "/better-blur-placeholder.jpg",
+            name: "Eve",
+            text: "Me too!",
             replies: [],
           },
         ],
@@ -50,40 +44,34 @@ export const commentsData = [
     ],
   },
   {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZCfHtY65KNFUfwYvpixpEu27dyTy3pFlGzw&s",
-    name: "Raju",
-    text: "Paisa Laya 😎💸??",
+    image: "/better-blur-placeholder.jpg",
+    name: "Frank",
+    text: "Awesome!",
     replies: [
       {
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3sKQL3Xxi1uropCetamdu9V9Pfy9tHyra0w&s",
-        name: "Pappu",
-        text: "Laya na bhaii!!!",
+        image: "/better-blur-placeholder.jpg",
+        name: "Grace",
+        text: "Yes!",
         replies: [
           {
-            image:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP3yLfzEhSdyRQWVaRKIIpe6NWEkyigMAq6gBaOTyAYE7bfC0eMN9cpyoZTCkHKbsnFg&usqp=CAU",
-            name: "Totla Seth",
-            text: "Mela Taalis Laath mudhe dedo abhi te abhi 😡!!",
+            image: "/better-blur-placeholder.jpg",
+            name: "Heidi",
+            text: "Totally!",
             replies: [
               {
-                image:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe1pAHyIb5lzWEu2O9EP2UbqX3VsL6KW_vNMUhsaox8ugdZKHjwp0WrMfeNiBa7Eb7hmA&usqp=CAU",
-                name: "Kachra Seth",
-                text: "Dedsau rupiya dega!!",
+                image: "/better-blur-placeholder.jpg",
+                name: "Ivan",
+                text: "Absolutely!",
                 replies: [
                   {
-                    image:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQdh2xEl_S4FRQE7pcFRTjSg3YHK6tI9Yq4w&s",
-                    name: "Munna Bhaiyaa",
-                    text: "Ye bhadiya tha guruu 🤣🤣",
+                    image: "/better-blur-placeholder.jpg",
+                    name: "Judy",
+                    text: "For sure!",
                     replies: [
                       {
-                        image:
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbcYSppyAihlktR0YRMGjr3FNPMtJfNPQhGR01rbRsGiWrGanko02laNS3zVnsvLiqV63dnZ0zRWUUmbX7IdE2ewWHSbiST99w_ft8k5Ctfg",
-                        name: "Baburao Ganpatrao Apte",
-                        text: "Kya gunda banega re tu?? CHeee!!",
+                        image: "/better-blur-placeholder.jpg",
+                        name: "Karl",
+                        text: "Haha!",
                         replies: [],
                       },
                     ],
@@ -91,10 +79,9 @@ export const commentsData = [
                 ],
               },
               {
-                image:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ErONmG44D1g0yle46tny4aBgB9HKJa2luw&s",
-                name: "Munna Bhai (MBBS)",
-                text: "Naii!!",
+                image: "/better-blur-placeholder.jpg",
+                name: "Leo",
+                text: "Nope!",
                 replies: [],
               },
             ],
@@ -104,19 +91,23 @@ export const commentsData = [
     ],
   },
   {
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSULGBnsGH-eGg2TATFvO4OXQ5Fz6UlWiwcXw&s",
-    name: "Chotuu",
-    text: "Khelgaa fedee fayarr khelega???",
+    image: "/better-blur-placeholder.jpg",
+    name: "Mallory",
+    text: "Great job!",
     replies: [
       {
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsifLT8Zv1to3enoVnrPPxYposSfYKX_MkLQ&s",
-        name: "Vakil",
-        text: "Kaun hai ye log? Kaha se aate hai??",
+        image: "/better-blur-placeholder.jpg",
+        name: "Nina",
+        text: "Who else liked it?",
         replies: [],
       },
     ],
+  },
+  {
+    image: "/better-blur-placeholder.jpg",
+    name: "Oscar",
+    text: "Keep it up!",
+    replies: [],
   },
 ];
 
